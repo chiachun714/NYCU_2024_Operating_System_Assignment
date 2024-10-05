@@ -1,5 +1,6 @@
 # Assignment I - Compiling a Custom Linux Kernel & Adding New System Calls
 TA's Hackmd Link: https://hackmd.io/@-ZZtFnnqSZ2F1A-Uy-GMlw/HJJj4BcKC
+Reference link: https://home.gamer.com.tw/creationDetail.php?sn=5696940
 
 ## How to write the system call
 
