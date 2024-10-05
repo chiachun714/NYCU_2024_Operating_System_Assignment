@@ -148,7 +148,7 @@ GRUB_DEFAULT='Advanced options for Ubuntu>Ubuntu, with Linux 6.1.0-os-310553023'
 ```
 The end of the code is depend on the kernel name we want to boot
 
-we can check the kernel name via:
+we can check all the installed kernel name via:
 ```
 ls /boot/vmlinuz-*
 ```
