@@ -155,10 +155,70 @@ ls /boot/vmlinuz-*
 
 After change the GRUB config, we need to updata the change
 ```
-sudo upgade-grub
+sudo updade-grub
 ```
 
 #### Others
 1. We can use `make -j $(nproc)` to make building kernel faster
 2. If `sudo update-initramfs -c -k 6.0.7` step filed is ok
 
+## Create patch file
+Before create the patch file, add the modified file and commit
+```
+git add.
+git commit -m "<commit name>"
+```
+
+Create patch file using `format-patch`
+```
+git format-patch -1
+```
+
+### How to test patch file ?
+You can test the patch file by reset the repository
+
+Using `git log` to check the commit history
+```
+git log --oneline
+```
+
+Reset current HEAD to the specified state
+```
+git reset --hard <version>
+```
+— hard 使用注意⚠️：如果修改了內容，執行了git add，但沒有執行 git commit，執行 git reset — hard 會刪除了已 git add 但未 git commit 的修改內容。
+
+Using `git am` to apply the patch
+```
+git am 0001-xxx.patch
+```
+
+Then build the kernel again and use the builded kernel to reboot and test if the syscall work.
+
+test code for `revstr` system call
+```
+#include <unistd.h>
+
+#include <string.h>
+#include <stdio.h>
+#include <assert.h>
+    
+#define __NR_revstr 451
+    
+int main(int argc, char *argv[]) {
+    
+    char str1[20] = "hello";
+    printf("Ori: %s\n", str1);
+    int ret1 = syscall(__NR_revstr, str1, strlen(str1));
+    assert(ret1 == 0);
+    printf("Rev: %s\n", str1);
+
+    char str2[20] = "Operating System";
+    printf("Ori: %s\n", str2);
+    int ret2 = syscall(__NR_revstr, str2, strlen(str2));
+    assert(ret2 == 0);
+    printf("Rev: %s\n", str2);
+
+    return 0;
+}
+```
