@@ -92,7 +92,7 @@ The first thing is register our system call function to system call table
 
 The system call table maps system calls to their respective implementation functions. Depending on the architecture, the system call table file will vary. For x86, the file is located in:
 ```
-linux/arch/x86/ syscalls /syscall_64.tbl
+linux/arch/x86/entry/syscalls/syscall_64.tbl
 ```
 write the following code into table file
 ```c++
@@ -155,12 +155,12 @@ ls /boot/vmlinuz-*
 
 After change the GRUB config, we need to updata the change
 ```
-sudo updade-grub
+sudo update-grub
 ```
 
 #### Others
 1. We can use `make -j $(nproc)` to make building kernel faster
-2. If `sudo update-initramfs -c -k 6.0.7` step filed is ok
+2. If `sudo update-initramfs -c -k 6.0.7` step failed is ok
 
 ## Create patch file
 Before create the patch file, add the modified file and commit
